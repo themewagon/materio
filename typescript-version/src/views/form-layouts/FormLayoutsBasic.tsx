@@ -146,7 +146,7 @@ const FormLayoutsBasic = () => {
                 </Button>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <Typography sx={{ mr: 2 }}>Already have an account?</Typography>
-                  <Link href='/' onClick={(e: SyntheticEvent) => e.preventDefault()}>
+                  <Link href='#' onClick={(e: SyntheticEvent) => e.preventDefault()}>
                     Log in
                   </Link>
                 </Box>

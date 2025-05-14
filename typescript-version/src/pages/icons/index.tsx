@@ -152,7 +152,7 @@ const Icons = () => {
           rel='noreferrer'
           component={Link}
           variant='contained'
-          href='https://materialdesignicons.com/'
+          href='#'
         >
           View All Material Design Icons
         </Button>
