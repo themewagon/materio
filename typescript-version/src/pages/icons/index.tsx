@@ -148,7 +148,6 @@ const Icons = () => {
       </Grid>
       <Grid item xs={12} sx={{ textAlign: 'center' }}>
         <Button
-          target='_blank'
           rel='noreferrer'
           component={Link}
           variant='contained'
