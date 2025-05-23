@@ -4,6 +4,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import { styled, useTheme } from '@mui/material/styles'
+import { getImagePrefix } from 'src/@core/utils/utils'
 
 // Styled component for the triangle shaped background image
 const TriangleImg = styled('img')({
@@ -40,8 +41,8 @@ const Trophy = () => {
         <Button size='small' variant='contained'>
           View Sales
         </Button>
-        <TriangleImg alt='triangle background' src={`/images/misc/${imageSrc}`} />
-        <TrophyImg alt='trophy' src='/images/misc/trophy.png' />
+        <TriangleImg alt='triangle background' src= {`/images/misc/${imageSrc}`}  />
+        <TrophyImg alt='trophy' src= {`${getImagePrefix()}images/misc/trophy.png`} />
       </CardContent>
     </Card>
   )

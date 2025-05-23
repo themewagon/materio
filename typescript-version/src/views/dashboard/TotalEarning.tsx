@@ -14,6 +14,7 @@ import DotsVertical from 'mdi-material-ui/DotsVertical'
 
 // ** Types
 import { ThemeColor } from 'src/@core/layouts/types'
+import { getImagePrefix } from 'src/@core/utils/utils'
 
 interface DataType {
   title: string
@@ -103,7 +104,7 @@ const TotalEarning = () => {
                   backgroundColor: theme => `rgba(${theme.palette.customColors.main}, 0.04)`
                 }}
               >
-                <img src={item.imgSrc} alt={item.title} height={item.imgHeight} />
+                <img src={`${getImagePrefix()}${item.imgSrc}`}  alt={item.title} height={item.imgHeight} />
               </Avatar>
               <Box
                 sx={{
