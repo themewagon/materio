@@ -7,6 +7,7 @@ import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import AvatarGroup from '@mui/material/AvatarGroup'
+import { getImagePrefix } from 'src/@core/utils/utils'
 
 const CardUser = () => {
   return (
@@ -14,7 +15,7 @@ const CardUser = () => {
       <CardMedia sx={{ height: '12.625rem' }} image='/images/cards/background-user.png' />
       <Avatar
         alt='Robert Meyer'
-        src='/images/avatars/1.png'
+        src= {`${getImagePrefix()}images/avatars/1.png`}
         sx={{
           width: 75,
           height: 75,

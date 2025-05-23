@@ -4,6 +4,7 @@ import { Fragment, ReactNode } from 'react'
 // ** MUI Components
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
+import { getImagePrefix } from 'src/@core/utils/utils'
 
 interface FooterIllustrationsProp {
   image?: ReactNode
@@ -40,8 +41,8 @@ const FooterIllustrations = (props: FooterIllustrationsProp) => {
   if (!hidden) {
     return (
       <Fragment>
-        {image || <TreeImg alt='tree' src='/images/pages/tree-2.png' />}
-        <MaskImg alt='mask' src={`/images/pages/misc-mask-${theme.palette.mode}.png`} />
+        {image || <TreeImg alt='tree' src={`${getImagePrefix()}images/pages/tree-2.png`} />}
+        <MaskImg alt='mask' src={`${getImagePrefix()}pages/misc-mask-${theme.palette.mode}.png`} />
       </Fragment>
     )
   } else {

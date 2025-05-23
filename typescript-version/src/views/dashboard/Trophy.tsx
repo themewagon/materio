@@ -41,7 +41,7 @@ const Trophy = () => {
         <Button size='small' variant='contained'>
           View Sales
         </Button>
-        <TriangleImg alt='triangle background' src= {`${getImagePrefix()}${imageSrc}`}  />
+        <TriangleImg alt='triangle background' src= {`/images/misc/${imageSrc}`}  />
         <TrophyImg alt='trophy' src= {`${getImagePrefix()}images/misc/trophy.png`} />
       </CardContent>
     </Card>
