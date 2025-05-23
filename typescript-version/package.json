@@ -42,7 +42,7 @@
     "export": "next export",
     "lint": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build && npm run export",
     "deploy": "touch out/.nojekyll && gh-pages -d out"
   },
   "dependencies": {
