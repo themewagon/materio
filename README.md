@@ -31,7 +31,7 @@ Design and code is completely written by ThemeSelection's design and development
 
 ## License
 
- - Design and Code is Copyright &copy; [CodedThemes](https://themeselection.com/)
+ - Design and Code is Copyright &copy; [ThemeSelection](https://themeselection.com/)
  - Licensed cover under [MIT]
  - Distributed by [ThemeWagon](https://themewagon.com)
 
