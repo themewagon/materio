@@ -14,7 +14,7 @@
 ```
 git clone https://github.com/themewagon/materio.git
 ```
-2. Navigate to the working version
+2. Navigate to the working directory
 ```
 cd typescript-version/
 
