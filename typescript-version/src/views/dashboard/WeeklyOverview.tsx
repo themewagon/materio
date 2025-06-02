@@ -1,25 +1,32 @@
-// ** MUI Imports
-import Box from '@mui/material/Box'
+'use client'
+
+// Next Imports
+import dynamic from 'next/dynamic'
+
+// MUI Imports
 import Card from '@mui/material/Card'
 import Button from '@mui/material/Button'
 import { useTheme } from '@mui/material/styles'
 import CardHeader from '@mui/material/CardHeader'
-import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 
-// ** Icons Imports
-import DotsVertical from 'mdi-material-ui/DotsVertical'
+// Third Party Imports
+import type { ApexOptions } from 'apexcharts'
 
-// ** Third Party Imports
-import { ApexOptions } from 'apexcharts'
+// Components Imports
+import OptionsMenu from '@core/components/option-menu'
 
-// ** Custom Components Imports
-import ReactApexcharts from 'src/@core/components/react-apexcharts'
+// Styled Component Imports
+const AppReactApexCharts = dynamic(() => import('@/libs/styles/AppReactApexCharts'))
 
 const WeeklyOverview = () => {
-  // ** Hook
+  // Hooks
   const theme = useTheme()
+
+  // Vars
+  const divider = 'var(--mui-palette-divider)'
+  const disabled = 'var(--mui-palette-text-disabled)'
 
   const options: ApexOptions = {
     chart: {
@@ -28,35 +35,30 @@ const WeeklyOverview = () => {
     },
     plotOptions: {
       bar: {
-        borderRadius: 9,
+        borderRadius: 7,
         distributed: true,
-        columnWidth: '40%',
-        endingShape: 'rounded',
-        startingShape: 'rounded'
+        columnWidth: '40%'
       }
     },
     stroke: {
       width: 2,
-      colors: [theme.palette.background.paper]
+      colors: ['var(--mui-palette-background-paper)']
     },
     legend: { show: false },
     grid: {
+      xaxis: { lines: { show: false } },
       strokeDashArray: 7,
-      padding: {
-        top: -1,
-        right: 0,
-        left: -12,
-        bottom: 5
-      }
+      padding: { left: -9, top: -20, bottom: 13 },
+      borderColor: divider
     },
     dataLabels: { enabled: false },
     colors: [
-      theme.palette.background.default,
-      theme.palette.background.default,
-      theme.palette.background.default,
-      theme.palette.primary.main,
-      theme.palette.background.default,
-      theme.palette.background.default
+      'var(--mui-palette-customColors-trackBg)',
+      'var(--mui-palette-customColors-trackBg)',
+      'var(--mui-palette-customColors-trackBg)',
+      'var(--mui-palette-primary-main)',
+      'var(--mui-palette-customColors-trackBg)',
+      'var(--mui-palette-customColors-trackBg)'
     ],
     states: {
       hover: {
@@ -77,7 +79,9 @@ const WeeklyOverview = () => {
       show: true,
       tickAmount: 4,
       labels: {
+        offsetY: 2,
         offsetX: -17,
+        style: { colors: disabled, fontSize: theme.typography.body2.fontSize as string },
         formatter: value => `${value > 999 ? `${(value / 1000).toFixed(0)}` : value}k`
       }
     }
@@ -87,23 +91,20 @@ const WeeklyOverview = () => {
     <Card>
       <CardHeader
         title='Weekly Overview'
-        titleTypographyProps={{
-          sx: { lineHeight: '2rem !important', letterSpacing: '0.15px !important' }
-        }}
-        action={
-          <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
-            <DotsVertical />
-          </IconButton>
-        }
+        action={<OptionsMenu iconClassName='text-textPrimary' options={['Refresh', 'Update', 'Delete']} />}
       />
       <CardContent sx={{ '& .apexcharts-xcrosshairs.apexcharts-active': { opacity: 0 } }}>
-        <ReactApexcharts type='bar' height={205} options={options} series={[{ data: [37, 57, 45, 75, 57, 40, 65] }]} />
-        <Box sx={{ mb: 7, display: 'flex', alignItems: 'center' }}>
-          <Typography variant='h5' sx={{ mr: 4 }}>
-            45%
-          </Typography>
-          <Typography variant='body2'>Your sales performance is 45% 😎 better compared to last month</Typography>
-        </Box>
+        <AppReactApexCharts
+          type='bar'
+          height={206}
+          width='100%'
+          series={[{ name: 'Sales', data: [37, 57, 45, 75, 57, 40, 65] }]}
+          options={options}
+        />
+        <div className='flex items-center mbe-4 gap-4'>
+          <Typography variant='h4'>45%</Typography>
+          <Typography>Your sales performance is 45% 😎 better compared to last month</Typography>
+        </div>
         <Button fullWidth variant='contained'>
           Details
         </Button>

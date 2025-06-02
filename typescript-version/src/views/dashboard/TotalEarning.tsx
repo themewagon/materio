@@ -1,58 +1,51 @@
-// ** MUI Imports
-import Box from '@mui/material/Box'
+// MUI Imports
 import Card from '@mui/material/Card'
-import Avatar from '@mui/material/Avatar'
-import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
+import Avatar from '@mui/material/Avatar'
 import LinearProgress from '@mui/material/LinearProgress'
 
-// ** Icons Imports
-import MenuUp from 'mdi-material-ui/MenuUp'
-import DotsVertical from 'mdi-material-ui/DotsVertical'
+import Typography from '@mui/material/Typography'
 
-// ** Types
-import { ThemeColor } from 'src/@core/layouts/types'
-import { getImagePrefix } from 'src/@core/utils/utils'
+// Type Imports
+import type { ThemeColor } from '@core/types'
 
-interface DataType {
+// Components Imports
+import OptionMenu from '@core/components/option-menu'
+
+type DataType = {
   title: string
   imgSrc: string
   amount: string
-  subtitle: string
   progress: number
-  color: ThemeColor
-  imgHeight: number
+  subtitle: string
+  color?: ThemeColor
 }
 
+// Vars
 const data: DataType[] = [
   {
     progress: 75,
-    imgHeight: 20,
     title: 'Zipcar',
-    color: 'primary',
     amount: '$24,895.65',
     subtitle: 'Vuejs, React & HTML',
-    imgSrc: '/images/cards/logo-zipcar.png'
+    imgSrc: '/images/cards/zipcar.png'
   },
   {
     progress: 50,
     color: 'info',
-    imgHeight: 27,
     title: 'Bitbank',
     amount: '$8,650.20',
     subtitle: 'Sketch, Figma & XD',
-    imgSrc: '/images/cards/logo-bitbank.png'
+    imgSrc: '/images/cards/bitbank.png'
   },
   {
     progress: 20,
-    imgHeight: 20,
     title: 'Aviato',
     color: 'secondary',
     amount: '$1,245.80',
     subtitle: 'HTML & Angular',
-    imgSrc: '/images/cards/logo-aviato.png'
+    imgSrc: '/images/cards/aviato.png'
   }
 ]
 
@@ -61,77 +54,45 @@ const TotalEarning = () => {
     <Card>
       <CardHeader
         title='Total Earning'
-        titleTypographyProps={{ sx: { lineHeight: '1.6 !important', letterSpacing: '0.15px !important' } }}
-        action={
-          <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
-            <DotsVertical />
-          </IconButton>
-        }
-      />
-      <CardContent sx={{ pt: theme => `${theme.spacing(2.25)} !important` }}>
-        <Box sx={{ mb: 1.5, display: 'flex', alignItems: 'center' }}>
-          <Typography variant='h4' sx={{ fontWeight: 600, fontSize: '2.125rem !important' }}>
-            $24,895
-          </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', color: 'success.main' }}>
-            <MenuUp sx={{ fontSize: '1.875rem', verticalAlign: 'middle' }} />
-            <Typography variant='body2' sx={{ fontWeight: 600, color: 'success.main' }}>
+        action={<OptionMenu iconClassName='text-textPrimary' options={['Last 28 Days', 'Last Month', 'Last Year']} />}
+      ></CardHeader>
+      <CardContent className='flex flex-col gap-11 md:mbs-2.5'>
+        <div>
+          <div className='flex items-center'>
+            <Typography variant='h3'>$24,895</Typography>
+            <i className='ri-arrow-up-s-line align-bottom text-success'></i>
+            <Typography component='span' color='success.main'>
               10%
             </Typography>
-          </Box>
-        </Box>
-
-        <Typography component='p' variant='caption' sx={{ mb: 10 }}>
-          Compared to $84,325 last year
-        </Typography>
-
-        {data.map((item: DataType, index: number) => {
-          return (
-            <Box
-              key={item.title}
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                ...(index !== data.length - 1 ? { mb: 8.5 } : {})
-              }}
-            >
-              <Avatar
-                variant='rounded'
-                sx={{
-                  mr: 3,
-                  width: 40,
-                  height: 40,
-                  backgroundColor: theme => `rgba(${theme.palette.customColors.main}, 0.04)`
-                }}
-              >
-                <img src={`${getImagePrefix()}${item.imgSrc}`}  alt={item.title} height={item.imgHeight} />
-              </Avatar>
-              <Box
-                sx={{
-                  width: '100%',
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <Box sx={{ marginRight: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Typography variant='body2' sx={{ mb: 0.5, fontWeight: 600, color: 'text.primary' }}>
+          </div>
+          <Typography>Compared to $84,325 last year</Typography>
+        </div>
+        <div className='flex flex-col gap-6'>
+          {data.map((item, index) => (
+            <div key={index} className='flex items-center gap-3'>
+              <Avatar src={item.imgSrc} variant='rounded' className='bg-actionHover' />
+              <div className='flex justify-between items-center is-full flex-wrap gap-x-4 gap-y-2'>
+                <div className='flex flex-col gap-0.5'>
+                  <Typography color='text.primary' className='font-medium'>
                     {item.title}
                   </Typography>
-                  <Typography variant='caption'>{item.subtitle}</Typography>
-                </Box>
-
-                <Box sx={{ minWidth: 85, display: 'flex', flexDirection: 'column' }}>
-                  <Typography variant='body2' sx={{ mb: 2, fontWeight: 600, color: 'text.primary' }}>
+                  <Typography>{item.subtitle}</Typography>
+                </div>
+                <div className='flex flex-col gap-2 items-center'>
+                  <Typography color='text.primary' className='font-medium'>
                     {item.amount}
                   </Typography>
-                  <LinearProgress color={item.color} value={item.progress} variant='determinate' />
-                </Box>
-              </Box>
-            </Box>
-          )
-        })}
+                  <LinearProgress
+                    variant='determinate'
+                    value={item.progress}
+                    className='is-20 bs-1'
+                    color={item.color}
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </CardContent>
     </Card>
   )

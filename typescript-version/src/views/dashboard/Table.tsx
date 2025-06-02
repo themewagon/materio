@@ -1,164 +1,164 @@
-// ** MUI Imports
-import Box from '@mui/material/Box'
+// MUI Imports
+import Typography from '@mui/material/Typography'
 import Card from '@mui/material/Card'
 import Chip from '@mui/material/Chip'
-import Table from '@mui/material/Table'
-import TableRow from '@mui/material/TableRow'
-import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import Typography from '@mui/material/Typography'
-import TableContainer from '@mui/material/TableContainer'
 
-// ** Types Imports
-import { ThemeColor } from 'src/@core/layouts/types'
+// Third-party Imports
+import classnames from 'classnames'
 
-interface RowType {
-  age: number
+// Components Imports
+import CustomAvatar from '@core/components/mui/Avatar'
+
+// Styles Imports
+import tableStyles from '@core/styles/table.module.css'
+
+type TableBodyRowType = {
+  avatarSrc?: string
   name: string
-  date: string
+  username: string
   email: string
-  salary: string
+  iconClass: string
+  roleIcon?: string
+  role: string
   status: string
-  designation: string
 }
 
-interface StatusObj {
-  [key: string]: {
-    color: ThemeColor
-  }
-}
-
-const rows: RowType[] = [
+// Vars
+const rowsData: TableBodyRowType[] = [
   {
-    age: 27,
-    status: 'current',
-    date: '09/27/2018',
-    name: 'Sally Quinn',
-    salary: '$19586.23',
-    email: 'eebsworth2m@sbwire.com',
-    designation: 'Human Resources Assistant'
+    avatarSrc: '/images/avatars/1.png',
+    name: 'Jordan Stevenson',
+    username: '@amiccoo',
+    email: 'Jacinthe_Blick@hotmail.com',
+    iconClass: 'text-primary',
+    roleIcon: 'ri-vip-crown-line',
+    role: 'Admin',
+    status: 'pending'
   },
   {
-    age: 61,
-    date: '09/23/2016',
-    salary: '$23896.35',
-    status: 'professional',
-    name: 'Margaret Bowers',
-    email: 'kocrevy0@thetimes.co.uk',
-    designation: 'Nuclear Power Engineer'
+    avatarSrc: '/images/avatars/2.png',
+    name: 'Richard Payne',
+    username: '@brossiter15',
+    email: 'Jaylon_Bartell3@gmail.com',
+    iconClass: 'text-warning',
+    roleIcon: 'ri-edit-box-line',
+    role: 'Editor',
+    status: 'active'
   },
   {
-    age: 59,
-    date: '10/15/2017',
-    name: 'Minnie Roy',
-    status: 'rejected',
-    salary: '$18991.67',
-    email: 'ediehn6@163.com',
-    designation: 'Environmental Specialist'
+    avatarSrc: '/images/avatars/3.png',
+    name: 'Jennifer Summers',
+    username: '@jsbemblinf',
+    email: 'Tristin_Johnson@gmail.com',
+    iconClass: 'text-error',
+    roleIcon: 'ri-computer-line',
+    role: 'Author',
+    status: 'active'
   },
   {
-    age: 30,
-    date: '06/12/2018',
-    status: 'resigned',
-    salary: '$19252.12',
-    name: 'Ralph Leonard',
-    email: 'dfalloona@ifeng.com',
-    designation: 'Sales Representative'
+    avatarSrc: '/images/avatars/4.png',
+    name: 'Mr. Justin Richardson',
+    username: '@justin45',
+    email: 'Toney21@yahoo.com',
+    iconClass: 'text-warning',
+    roleIcon: 'ri-edit-box-line',
+    role: 'Editor',
+    status: 'pending'
   },
   {
-    age: 66,
-    status: 'applied',
-    date: '03/24/2018',
-    salary: '$13076.28',
-    name: 'Annie Martin',
-    designation: 'Operator',
-    email: 'sganderton2@tuttocitta.it'
+    avatarSrc: '/images/avatars/5.png',
+    name: 'Nicholas Tanner',
+    username: '@tannernic',
+    email: 'Hunter_Kuhic68@hotmail.com',
+    iconClass: 'text-info',
+    roleIcon: 'ri-pie-chart-2-line',
+    role: 'Maintainer',
+    status: 'active'
   },
   {
-    age: 33,
-    date: '08/25/2017',
-    salary: '$10909.52',
-    name: 'Adeline Day',
-    status: 'professional',
-    email: 'hnisius4@gnu.org',
-    designation: 'Senior Cost Accountant'
+    avatarSrc: '/images/avatars/6.png',
+    name: 'Crystal Mays',
+    username: '@crystal99',
+    email: 'Norene_Bins@yahoo.com',
+    iconClass: 'text-warning',
+    roleIcon: 'ri-edit-box-line',
+    role: 'Editor',
+    status: 'pending'
   },
   {
-    age: 61,
-    status: 'current',
-    date: '06/01/2017',
-    salary: '$17803.80',
-    name: 'Lora Jackson',
-    designation: 'Geologist',
-    email: 'ghoneywood5@narod.ru'
+    avatarSrc: '/images/avatars/7.png',
+    name: 'Mary Garcia',
+    username: '@marygarcia4',
+    email: 'Emmitt.Walker14@hotmail.com',
+    iconClass: 'text-info',
+    roleIcon: 'ri-pie-chart-2-line',
+    role: 'Maintainer',
+    status: 'inactive'
   },
   {
-    age: 22,
-    date: '12/03/2017',
-    salary: '$12336.17',
-    name: 'Rodney Sharp',
-    status: 'professional',
-    designation: 'Cost Accountant',
-    email: 'dcrossman3@google.co.jp'
+    avatarSrc: '/images/avatars/8.png',
+    name: 'Megan Roberts',
+    username: '@megan78',
+    email: 'Patrick.Howe73@gmail.com',
+    iconClass: 'text-success',
+    roleIcon: 'ri-user-3-line',
+    role: 'Subscriber',
+    status: 'active'
   }
 ]
 
-const statusObj: StatusObj = {
-  applied: { color: 'info' },
-  rejected: { color: 'error' },
-  current: { color: 'primary' },
-  resigned: { color: 'warning' },
-  professional: { color: 'success' }
-}
-
-const DashboardTable = () => {
+const Table = () => {
   return (
     <Card>
-      <TableContainer>
-        <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Salary</TableCell>
-              <TableCell>Age</TableCell>
-              <TableCell>Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row: RowType) => (
-              <TableRow hover key={row.name} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
-                <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
-                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{row.name}</Typography>
-                    <Typography variant='caption'>{row.designation}</Typography>
-                  </Box>
-                </TableCell>
-                <TableCell>{row.email}</TableCell>
-                <TableCell>{row.date}</TableCell>
-                <TableCell>{row.salary}</TableCell>
-                <TableCell>{row.age}</TableCell>
-                <TableCell>
+      <div className='overflow-x-auto'>
+        <table className={tableStyles.table}>
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rowsData.map((row, index) => (
+              <tr key={index}>
+                <td className='!plb-1'>
+                  <div className='flex items-center gap-3'>
+                    <CustomAvatar src={row.avatarSrc} size={34} />
+                    <div className='flex flex-col'>
+                      <Typography color='text.primary' className='font-medium'>
+                        {row.name}
+                      </Typography>
+                      <Typography variant='body2'>{row.username}</Typography>
+                    </div>
+                  </div>
+                </td>
+                <td className='!plb-1'>
+                  <Typography>{row.email}</Typography>
+                </td>
+                <td className='!plb-1'>
+                  <div className='flex gap-2'>
+                    <i className={classnames(row.roleIcon, row.iconClass, 'text-[22px]')} />
+                    <Typography color='text.primary'>{row.role}</Typography>
+                  </div>
+                </td>
+                <td className='!pb-1'>
                   <Chip
+                    className='capitalize'
+                    variant='tonal'
+                    color={row.status === 'pending' ? 'warning' : row.status === 'inactive' ? 'secondary' : 'success'}
                     label={row.status}
-                    color={statusObj[row.status].color}
-                    sx={{
-                      height: 24,
-                      fontSize: '0.75rem',
-                      textTransform: 'capitalize',
-                      '& .MuiChip-label': { fontWeight: 500 }
-                    }}
+                    size='small'
                   />
-                </TableCell>
-              </TableRow>
+                </td>
+              </tr>
             ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+          </tbody>
+        </table>
+      </div>
     </Card>
   )
 }
 
-export default DashboardTable
+export default Table

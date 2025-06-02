@@ -1,84 +1,75 @@
-// ** React Imports
-import { ReactNode } from 'react'
-
-// ** MUI Imports
-import Box from '@mui/material/Box'
+// MUI Imports
 import Card from '@mui/material/Card'
-import Avatar from '@mui/material/Avatar'
-import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
 
-// ** Icons Imports
-import ChevronUp from 'mdi-material-ui/ChevronUp'
-import ChevronDown from 'mdi-material-ui/ChevronDown'
-import DotsVertical from 'mdi-material-ui/DotsVertical'
+// Third-party Imports
+import classnames from 'classnames'
 
-// ** Types
-import { ThemeColor } from 'src/@core/layouts/types'
+// Type Imports
+import type { ThemeColor } from '@core/types'
 
-interface DataType {
+// Components Imports
+import OptionMenu from '@core/components/option-menu'
+import CustomAvatar from '@core/components/mui/Avatar'
+
+type DataType = {
+  avatarLabel: string
+  avatarColor?: ThemeColor
   title: string
-  sales: string
-  trend: ReactNode
-  trendDir: string
   subtitle: string
-  avatarText: string
-  trendNumber: string
-  avatarColor: ThemeColor
+  sales: string
+  trend: 'up' | 'down'
+  trendPercentage: string
 }
 
+// Vars
 const data: DataType[] = [
   {
-    sales: '894k',
-    trendDir: 'up',
-    subtitle: 'USA',
-    title: '$8,656k',
-    avatarText: 'US',
-    trendNumber: '25.8%',
+    avatarLabel: 'US',
     avatarColor: 'success',
-    trend: <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} />
+    title: '$8,656k',
+    subtitle: 'United states of america',
+    sales: '894k',
+    trend: 'up',
+    trendPercentage: '25.8%'
   },
   {
-    sales: '645k',
-    subtitle: 'UK',
-    trendDir: 'down',
+    avatarLabel: 'UK',
+    avatarColor: 'error',
     title: '$2,415k',
-    avatarText: 'UK',
-    trendNumber: '6.2%',
-    avatarColor: 'error',
-    trend: <ChevronDown sx={{ color: 'error.main', fontWeight: 600 }} />
+    subtitle: 'United kingdom',
+    sales: '645k',
+    trend: 'down',
+    trendPercentage: '6.2%'
   },
   {
-    sales: '148k',
-    title: '$865k',
-    trendDir: 'up',
-    avatarText: 'IN',
-    subtitle: 'India',
-    trendNumber: '12.4%',
+    avatarLabel: 'IN',
     avatarColor: 'warning',
-    trend: <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} />
+    title: '$865k',
+    subtitle: 'India',
+    sales: '148k',
+    trend: 'up',
+    trendPercentage: '12.4%'
   },
   {
-    sales: '86k',
-    title: '$745k',
-    trendDir: 'down',
-    avatarText: 'JA',
-    subtitle: 'Japan',
-    trendNumber: '11.9%',
+    avatarLabel: 'JA',
     avatarColor: 'secondary',
-    trend: <ChevronDown sx={{ color: 'error.main', fontWeight: 600 }} />
+    title: '$745k',
+    subtitle: 'Japan',
+    sales: '86k',
+    trend: 'down',
+    trendPercentage: '11.9%'
   },
   {
-    sales: '42k',
-    title: '$45k',
-    trendDir: 'up',
-    avatarText: 'KO',
-    subtitle: 'Korea',
-    trendNumber: '16.2%',
+    avatarLabel: 'KO',
     avatarColor: 'error',
-    trend: <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} />
+    title: '$45k',
+    subtitle: 'Korea',
+    sales: '42k',
+    trend: 'up',
+    trendPercentage: '16.2%'
   }
 ]
 
@@ -87,80 +78,45 @@ const SalesByCountries = () => {
     <Card>
       <CardHeader
         title='Sales by Countries'
-        titleTypographyProps={{ sx: { lineHeight: '1.2 !important', letterSpacing: '0.31px !important' } }}
-        action={
-          <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
-            <DotsVertical />
-          </IconButton>
-        }
+        action={<OptionMenu iconClassName='text-textPrimary' options={['Last 28 Days', 'Last Month', 'Last Year']} />}
       />
-      <CardContent sx={{ pt: theme => `${theme.spacing(2)} !important` }}>
-        {data.map((item: DataType, index: number) => {
-          return (
-            <Box
-              key={item.title}
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                ...(index !== data.length - 1 ? { mb: 5.875 } : {})
-              }}
-            >
-              <Avatar
-                sx={{
-                  width: 38,
-                  height: 38,
-                  marginRight: 3,
-                  fontSize: '1rem',
-                  color: 'common.white',
-                  backgroundColor: `${item.avatarColor}.main`
-                }}
-              >
-                {item.avatarText}
-              </Avatar>
-
-              <Box
-                sx={{
-                  width: '100%',
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <Box sx={{ marginRight: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Box sx={{ display: 'flex' }}>
-                    <Typography sx={{ mr: 0.5, fontWeight: 600, letterSpacing: '0.25px' }}>{item.title}</Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      {item.trend}
-                      <Typography
-                        variant='caption'
-                        sx={{
-                          fontWeight: 600,
-                          lineHeight: 1.5,
-                          color: item.trendDir === 'down' ? 'error.main' : 'success.main'
-                        }}
-                      >
-                        {item.trendNumber}
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <Typography variant='caption' sx={{ lineHeight: 1.5 }}>
-                    {item.subtitle}
+      <CardContent className='flex flex-col gap-[0.875rem]'>
+        {data.map((item, index) => (
+          <div key={index} className='flex items-center gap-4'>
+            <CustomAvatar skin='light' color={item.avatarColor}>
+              {item.avatarLabel}
+            </CustomAvatar>
+            <div className='flex items-center justify-between is-full flex-wrap gap-x-4 gap-y-2'>
+              <div className='flex flex-col gap-1'>
+                <div className='flex items-center gap-1'>
+                  <Typography color='text.primary' className='font-medium'>
+                    {item.title}
                   </Typography>
-                </Box>
-
-                <Box sx={{ display: 'flex', textAlign: 'end', flexDirection: 'column' }}>
-                  <Typography sx={{ fontWeight: 600, fontSize: '0.875rem', lineHeight: 1.72, letterSpacing: '0.22px' }}>
-                    {item.sales}
-                  </Typography>
-                  <Typography variant='caption' sx={{ lineHeight: 1.5 }}>
-                    Sales
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-          )
-        })}
+                  <div className={'flex items-center gap-1'}>
+                    <i
+                      className={classnames(
+                        item.trend === 'up' ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line',
+                        item.trend === 'up' ? 'text-success' : 'text-error'
+                      )}
+                    ></i>
+                    <Typography color={item.trend === 'up' ? 'success.main' : 'error.main'}>
+                      {item.trendPercentage}
+                    </Typography>
+                  </div>
+                </div>
+                <Typography>{item.subtitle}</Typography>
+              </div>
+              <div className='flex flex-col gap-1'>
+                <Typography color='text.primary' className='font-medium'>
+                  {item.sales}
+                </Typography>
+                <Typography variant='body2' color='text.disabled'>
+                  Sales
+                </Typography>
+              </div>
+            </div>
+          </div>
+        ))}
       </CardContent>
     </Card>
   )

@@ -22,7 +22,7 @@ or, cd javascript-version/
 ```
 3. Install dependencies
 ```
-npm install --legacy-peer-deps
+npm install i
 ```
 ## Author
 

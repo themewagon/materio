@@ -1,104 +1,61 @@
-// ** Util Import
-import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
-
-const Dialog = theme => {
-  return {
-    MuiDialog: {
-      styleOverrides: {
-        paper: {
-          boxShadow: theme.shadows[6],
+const dialog = skin => ({
+  MuiDialog: {
+    styleOverrides: {
+      paper: ({ theme }) => ({
+        ...(skin !== 'bordered'
+          ? {
+              boxShadow: 'var(--mui-customShadows-xl)'
+            }
+          : {
+              boxShadow: 'none'
+            }),
+        [theme.breakpoints.down('sm')]: {
           '&:not(.MuiDialog-paperFullScreen)': {
-            '@media (max-width:599px)': {
-              margin: theme.spacing(4),
-              width: `calc(100% - ${theme.spacing(8)})`,
-              maxWidth: `calc(100% - ${theme.spacing(8)}) !important`
-            }
-          },
-          '& > .MuiList-root': {
-            paddingLeft: theme.spacing(1),
-            paddingRight: theme.spacing(1)
+            margin: theme.spacing(6)
           }
         }
-      }
+      })
+    }
+  },
+  MuiDialogTitle: {
+    defaultProps: {
+      variant: 'h5'
     },
-    MuiDialogTitle: {
-      styleOverrides: {
-        root: {
-          padding: theme.spacing(5)
+    styleOverrides: {
+      root: ({ theme }) => ({
+        padding: theme.spacing(5),
+        '& + .MuiDialogActions-root': {
+          paddingTop: 0
         }
-      }
-    },
-    MuiDialogContent: {
-      styleOverrides: {
-        root: {
-          padding: theme.spacing(5),
-          '& + .MuiDialogContent-root': {
-            paddingTop: 0
-          },
-          '& + .MuiDialogActions-root': {
-            paddingTop: 0
-          },
-
-          // Styling for Mobile Date Picker starts
-          '& .PrivatePickersToolbar-root': {
-            padding: theme.spacing(4, 5),
-            color: theme.palette.primary.contrastText,
-            backgroundColor: theme.palette.primary.main,
-            '& .MuiTypography-root': {
-              color: theme.palette.primary.contrastText
-            },
-            '& span.MuiTypography-overline': {
-              fontSize: '1rem',
-              lineHeight: '24px',
-              letterSpacing: '0.15px'
-            },
-            '& ~ div[class^="css-"] > div[class^="css-"]': {
-              marginTop: theme.spacing(6),
-              marginBottom: theme.spacing(6),
-              '& > div[class^="css-"]': {
-                backgroundColor:
-                  theme.palette.mode === 'light' ? theme.palette.grey[50] : theme.palette.background.default,
-                '& ~ .MuiIconButton-root span.MuiTypography-caption': {
-                  color: 'inherit'
-                }
-              }
-            },
-            '& .PrivateTimePickerToolbar-hourMinuteLabel': {
-              alignItems: 'center',
-              '& > .MuiButton-root span.MuiTypography-root': {
-                fontWeight: 300,
-                lineHeight: '72px',
-                fontSize: '3.75rem',
-                letterSpacing: '-0.5px'
-              },
-              '& > .MuiTypography-root': {
-                color: hexToRGBA(theme.palette.primary.contrastText, 0.54),
-                '& + .MuiButton-root > span.MuiTypography-root': {
-                  color: hexToRGBA(theme.palette.primary.contrastText, 0.54)
-                }
-              }
-            },
-            '& .PrivateTimePickerToolbar-ampmSelection span.MuiTypography-root:not(.Mui-selected)': {
-              color: hexToRGBA(theme.palette.primary.contrastText, 0.54)
-            }
-          }
-
-          // Styling for Mobile Date Picker ends
+      })
+    }
+  },
+  MuiDialogContent: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        padding: theme.spacing(5),
+        '& + .MuiDialogContent-root, & + .MuiDialogActions-root': {
+          paddingTop: 0
         }
-      }
-    },
-    MuiDialogActions: {
-      styleOverrides: {
-        root: {
-          padding: theme.spacing(5),
-          '&.dialog-actions-dense': {
-            padding: theme.spacing(2.5),
-            paddingTop: 0
+      })
+    }
+  },
+  MuiDialogActions: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        padding: theme.spacing(5),
+        '& .MuiButtonBase-root:not(:first-of-type)': {
+          marginInlineStart: theme.spacing(4)
+        },
+        '&:where(.dialog-actions-dense)': {
+          padding: theme.spacing(2.5),
+          '& .MuiButton-text': {
+            paddingInline: theme.spacing(2.5)
           }
         }
-      }
+      })
     }
   }
-}
+})
 
-export default Dialog
+export default dialog

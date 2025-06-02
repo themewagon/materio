@@ -1,86 +1,91 @@
-// ** MUI Imports
-import { Theme } from '@mui/material/styles'
+// MUI Imports
+import type { Theme } from '@mui/material/styles'
 
-const Card = (theme: Theme) => {
+// Type Imports
+import type { Skin } from '@core/types'
+
+const card = (skin: Skin): Theme['components'] => {
   return {
     MuiCard: {
+      defaultProps: {
+        ...(skin === 'bordered' && {
+          variant: 'outlined'
+        })
+      },
       styleOverrides: {
-        root: {
-          boxShadow: theme.shadows[6],
-          '& .card-more-options': {
-            marginTop: theme.spacing(-1),
-            marginRight: theme.spacing(-3)
-          }
-        }
+        root: ({ ownerState }) => ({
+          ...(ownerState.variant !== 'outlined' && {
+            boxShadow: 'var(--mui-customShadows-md)'
+          })
+        })
       }
     },
     MuiCardHeader: {
       styleOverrides: {
-        root: {
+        root: ({ theme }) => ({
           padding: theme.spacing(5),
-          '& + .MuiCardContent-root, & + .MuiCollapse-root .MuiCardContent-root': {
-            paddingTop: 0
+          '& + .MuiCardContent-root, & + .MuiCardActions-root': {
+            paddingBlockStart: 0
           },
-          '& .MuiCardHeader-subheader': {
-            fontSize: '0.875rem'
+          '& + .MuiCollapse-root .MuiCardContent-root:first-child, & + .MuiCollapse-root .MuiCardActions-root:first-child':
+            {
+              paddingBlockStart: 0
+            }
+        }),
+        subheader: ({ theme }) => ({
+          ...theme.typography.subtitle1,
+          color: 'rgb(var(--mui-palette-text-primaryChannel) / 0.55)'
+        }),
+        action: ({ theme }) => ({
+          ...theme.typography.body1,
+          color: 'var(--mui-palette-text-disabled)',
+          marginBlock: 0,
+          marginInlineEnd: 0,
+          '& .MuiIconButton-root': {
+            color: 'inherit'
           }
-        },
-        title: {
-          lineHeight: 1,
-          fontWeight: 500,
-          fontSize: '1.25rem',
-          letterSpacing: '0.0125em'
-        },
-        action: {
-          marginTop: 0,
-          marginRight: 0
-        }
+        })
       }
     },
     MuiCardContent: {
       styleOverrides: {
-        root: {
+        root: ({ theme }) => ({
           padding: theme.spacing(5),
-          '& + .MuiCardContent-root': {
-            paddingTop: 0
+          color: 'var(--mui-palette-text-secondary)',
+          '&:last-child': {
+            paddingBlockEnd: theme.spacing(5)
           },
-          '&:last-of-type': {
-            paddingBottom: theme.spacing(5)
+          '& + .MuiCardHeader-root, & + .MuiCardContent-root, & + .MuiCardActions-root': {
+            paddingBlockStart: 0
           },
-          '& + .MuiCardActions-root': {
-            paddingTop: 0
-          }
-        }
+          '& + .MuiCollapse-root .MuiCardHeader-root:first-child, & + .MuiCollapse-root .MuiCardContent-root:first-child, & + .MuiCollapse-root .MuiCardActions-root:first-child':
+            {
+              paddingBlockStart: 0
+            }
+        })
       }
     },
     MuiCardActions: {
       styleOverrides: {
-        root: {
+        root: ({ theme }) => ({
           padding: theme.spacing(5),
-          '&.card-action-dense': {
-            padding: theme.spacing(0, 2.5, 2.5),
-            '.MuiCard-root .MuiCardMedia-root + &': {
-              paddingTop: theme.spacing(2.5)
-            },
-            '.MuiCard-root &:first-of-type': {
-              paddingTop: theme.spacing(5),
-              paddingBottom: theme.spacing(5),
-              '& + .MuiCardContent-root': {
-                paddingTop: 0
-              },
-              '& + .MuiCardHeader-root': {
-                paddingTop: 0
-              }
+          '&:where(.card-actions-dense)': {
+            padding: theme.spacing(2.5),
+            '& .MuiButton-text': {
+              paddingInline: theme.spacing(2.5)
             }
           },
-          '& .MuiButton-text': {
-            paddingLeft: theme.spacing(2.5),
-            paddingRight: theme.spacing(2.5)
-          }
-        }
+          '& + .MuiCardHeader-root, & + .MuiCardContent-root, & + .MuiCardActions-root': {
+            paddingBlockStart: 0
+          },
+          '& + .MuiCollapse-root .MuiCardHeader-root:first-child, & + .MuiCollapse-root .MuiCardContent-root:first-child, & + .MuiCollapse-root .MuiCardActions-root:first-child':
+            {
+              paddingBlockStart: 0
+            }
+        })
       }
     }
   }
 }
 
-export default Card
+export default card

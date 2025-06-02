@@ -1,58 +1,47 @@
-// ** MUI Imports
-import Box from '@mui/material/Box'
+// MUI Imports
 import Card from '@mui/material/Card'
-import { styled } from '@mui/material/styles'
 import CardHeader from '@mui/material/CardHeader'
-import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
-import MuiDivider, { DividerProps } from '@mui/material/Divider'
-import { getImagePrefix } from 'src/@core/utils/utils'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
 
-interface DataType {
+// Component Imports
+import Link from '@components/Link'
+
+type DataType = {
   logo: string
   title: string
   amount: string
   subtitle: string
-  logoWidth: number
-  logoHeight: number
 }
 
-const depositData = [
+// Vars
+const depositData: DataType[] = [
   {
-    logoWidth: 28,
-    logoHeight: 29,
     amount: '+$4,650',
     subtitle: 'Sell UI Kit',
     title: 'Gumroad Account',
-    logo: '/images/logos/gumroad.png'
+    logo: '/images/cards/gumroad.png'
   },
   {
-    logoWidth: 38,
-    logoHeight: 38,
     amount: '+$92,705',
     title: 'Mastercard',
     subtitle: 'Wallet deposit',
-    logo: '/images/logos/mastercard-label.png'
+    logo: '/images/logos/mastercard.png'
   },
   {
-    logoWidth: 20,
-    logoHeight: 28,
     amount: '+$957',
     title: 'Stripe Account',
     subtitle: 'iOS Application',
     logo: '/images/logos/stripe.png'
   },
   {
-    logoWidth: 34,
-    logoHeight: 32,
     amount: '+$6,837',
     title: 'American Bank',
     subtitle: 'Bank Transfer',
     logo: '/images/logos/american-bank.png'
   },
   {
-    logoWidth: 33,
-    logoHeight: 22,
     amount: '+$446',
     title: 'Bank Account',
     subtitle: 'Wallet deposit',
@@ -62,40 +51,30 @@ const depositData = [
 
 const withdrawData = [
   {
-    logoWidth: 29,
-    logoHeight: 30,
     amount: '-$145',
     title: 'Google Adsense',
     subtitle: 'Paypal deposit',
     logo: '/images/logos/google.png'
   },
   {
-    logoWidth: 34,
-    logoHeight: 34,
     amount: '-$1870',
     title: 'Github Enterprise',
     logo: '/images/logos/github.png',
     subtitle: 'Security & compliance'
   },
   {
-    logoWidth: 30,
-    logoHeight: 30,
     amount: '-$450',
     title: 'Upgrade Slack Plan',
     subtitle: 'Debit card deposit',
     logo: '/images/logos/slack.png'
   },
   {
-    logoWidth: 30,
-    logoHeight: 30,
     amount: '-$540',
     title: 'Digital Ocean',
     subtitle: 'Cloud Hosting',
     logo: '/images/logos/digital-ocean.png'
   },
   {
-    logoWidth: 36,
-    logoHeight: 21,
     amount: '-$21',
     title: 'AWS Account',
     logo: '/images/logos/aws.png',
@@ -103,109 +82,67 @@ const withdrawData = [
   }
 ]
 
-// Styled Divider component
-const Divider = styled(MuiDivider)<DividerProps>(({ theme }) => ({
-  margin: theme.spacing(5, 0),
-  borderRight: `1px solid ${theme.palette.divider}`,
-  [theme.breakpoints.down('md')]: {
-    borderRight: 'none',
-    margin: theme.spacing(0, 5),
-    borderBottom: `1px solid ${theme.palette.divider}`
-  }
-}))
-
 const DepositWithdraw = () => {
   return (
-    <Card sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: ['column', 'column', 'row'] }}>
-      <Box sx={{ width: '100%' }}>
-        <CardHeader
-          title='Deposit'
-          sx={{ pt: 5.5, alignItems: 'center', '& .MuiCardHeader-action': { mt: 0.6 } }}
-          action={<Typography variant='caption'>View All</Typography>}
-          titleTypographyProps={{
-            variant: 'h6',
-            sx: { lineHeight: '1.6 !important', letterSpacing: '0.15px !important' }
-          }}
-        />
-        <CardContent sx={{ pb: theme => `${theme.spacing(5.5)} !important` }}>
-          {depositData.map((item: DataType, index: number) => {
-            return (
-              <Box
-                key={item.title}
-                sx={{ display: 'flex', alignItems: 'center', mb: index !== depositData.length - 1 ? 6 : 0 }}
-              >
-                <Box sx={{ minWidth: 38, display: 'flex', justifyContent: 'center' }}>
-                  <img src= {`${getImagePrefix()}${item.logo}`} alt={item.title} width={item.logoWidth} height={item.logoHeight} />
-                </Box>
-                <Box
-                  sx={{
-                    ml: 4,
-                    width: '100%',
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Box sx={{ marginRight: 2, display: 'flex', flexDirection: 'column' }}>
-                    <Typography sx={{ fontWeight: 600, fontSize: '0.875rem' }}>{item.title}</Typography>
-                    <Typography variant='caption'>{item.subtitle}</Typography>
-                  </Box>
-                  <Typography variant='subtitle2' sx={{ fontWeight: 600, color: 'success.main' }}>
+    <Card>
+      <Grid container>
+        <Grid item xs={12} md={6} className='border-be md:border-be-0 md:border-ie'>
+          <CardHeader
+            title='Deposit'
+            action={
+              <Typography component={Link} className='font-medium' color='primary'>
+                View All
+              </Typography>
+            }
+          />
+          <CardContent className='flex flex-col gap-5'>
+            {depositData.map((item, index) => (
+              <div key={index} className='flex items-center gap-4'>
+                <img src={item.logo} alt={item.title} width={30} />
+                <div className='flex justify-between items-center is-full flex-wrap gap-x-4 gap-y-2'>
+                  <div className='flex flex-col gap-0.5'>
+                    <Typography color='text.primary' className='font-medium'>
+                      {item.title}
+                    </Typography>
+                    <Typography>{item.subtitle}</Typography>
+                  </div>
+                  <Typography color='success.main' className='font-medium'>
                     {item.amount}
                   </Typography>
-                </Box>
-              </Box>
-            )
-          })}
-        </CardContent>
-      </Box>
-
-      <Divider flexItem />
-
-      <Box sx={{ width: '100%' }}>
-        <CardHeader
-          title='Withdraw'
-          sx={{ pt: 5.5, alignItems: 'center', '& .MuiCardHeader-action': { mt: 0.6 } }}
-          action={<Typography variant='caption'>View All</Typography>}
-          titleTypographyProps={{
-            variant: 'h6',
-            sx: { lineHeight: '1.6 !important', letterSpacing: '0.15px !important' }
-          }}
-        />
-        <CardContent sx={{ pb: theme => `${theme.spacing(5.5)} !important` }}>
-          {withdrawData.map((item: DataType, index: number) => {
-            return (
-              <Box
-                key={item.title}
-                sx={{ display: 'flex', alignItems: 'center', mb: index !== depositData.length - 1 ? 6 : 0 }}
-              >
-                <Box sx={{ minWidth: 36, display: 'flex', justifyContent: 'center' }}>
-                  <img src={`${getImagePrefix()}${item.logo}`}  alt={item.title} width={item.logoWidth} height={item.logoHeight} />
-                </Box>
-                <Box
-                  sx={{
-                    ml: 4,
-                    width: '100%',
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Box sx={{ marginRight: 2, display: 'flex', flexDirection: 'column' }}>
-                    <Typography sx={{ fontWeight: 600, fontSize: '0.875rem' }}>{item.title}</Typography>
-                    <Typography variant='caption'>{item.subtitle}</Typography>
-                  </Box>
-                  <Typography variant='subtitle2' sx={{ fontWeight: 600, color: 'error.main' }}>
+                </div>
+              </div>
+            ))}
+          </CardContent>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <CardHeader
+            title='Withdraw'
+            action={
+              <Typography component={Link} className='font-medium' color='primary'>
+                View All
+              </Typography>
+            }
+          />
+          <CardContent className='flex flex-col gap-5'>
+            {withdrawData.map((item, index) => (
+              <div key={index} className='flex items-center gap-4'>
+                <img src={item.logo} alt={item.title} width={30} />
+                <div className='flex justify-between items-center is-full flex-wrap gap-x-4 gap-y-2'>
+                  <div className='flex flex-col gap-0.5'>
+                    <Typography color='text.primary' className='font-medium'>
+                      {item.title}
+                    </Typography>
+                    <Typography>{item.subtitle}</Typography>
+                  </div>
+                  <Typography color='error.main' className='font-medium'>
                     {item.amount}
                   </Typography>
-                </Box>
-              </Box>
-            )
-          })}
-        </CardContent>
-      </Box>
+                </div>
+              </div>
+            ))}
+          </CardContent>
+        </Grid>
+      </Grid>
     </Card>
   )
 }
